@@ -55,15 +55,13 @@ void setup() {
   pinMode(buzzer, OUTPUT);
   pinMode(uvlamp, OUTPUT);
   pinMode(wtlamp, OUTPUT);
-  m_home();
-  s_home();
-  b_home();
 
-  base_init();
   Serial.begin(9600);
   Wire.begin(0x07); //Set Arduino up as an I2C slave at address 0x07
   Wire.onRequest(requestEvent); //Prepare to send data
   Wire.onReceive(receiveEvent); //Prepare to recieve data
+  tsen_stat();
+
 }
 
 void loop()
@@ -201,7 +199,62 @@ void loop()
     de = "done";
     te = "";
   }
+  else if (te.substring(0, 3) == "ini")
+  {
+    // Serial.println("in" + de.substring(0,3));
+    initz();
+    delay(500);
+    de = "done";
+    te = "";
+  }
+  else if (te.substring(0, 3) == "dss")
+  {
+    // Serial.println("in" + de.substring(0,3));
+    dsen_stat();
+    delay(200);
+    de = "done";
+    te = "";
+  }
 
+}
+
+void tsen_stat()
+{
+  while (1)
+  {
+    int stat = digitalRead(tsen);
+    if (stat == 0)
+    {
+      de = "tlock";
+    }
+    else
+    {
+      de = "done";
+      break;
+    }
+  }
+}
+
+void dsen_stat()
+{
+  int stat = digitalRead(dsen);
+  if (stat == 1)
+  {
+    de = "dopen";
+  }
+  else
+  {
+    de = "done";
+  }
+
+}
+
+void initz()
+{
+  m_home();
+  s_home();
+  b_home();
+  base_init();
 }
 
 void m_home() {
@@ -274,12 +327,7 @@ void magnet_home()
   //digitalWrite(m_en, HIGH);
 }
 
-void door_sensor()
-{
-  int stat = digitalRead(dsen);
-  Serial.println(stat);
 
-}
 
 
 void base_forward1()
