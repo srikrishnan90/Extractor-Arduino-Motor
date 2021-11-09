@@ -21,6 +21,7 @@ const int tsen = 28;
 
 const int uvlamp = 22;
 const int wtlamp = 23;
+int uv_off_stat=0;
 
 const int buzzer = 15; //buzzer to arduino pin 9
 
@@ -175,6 +176,14 @@ void loop()
     de = "done";
     te = "";
   }
+  else if (te.substring(0, 3) == "mag")
+  {
+    //Serial.println("in" + de.substring(0,3));
+    idle();
+    delay(500);
+    de = "done";
+    te = "";
+  }
   else if (te.substring(0, 3) == "mix")
   {
     // Serial.println("in" + de.substring(0,3));
@@ -215,8 +224,17 @@ void loop()
     de = "done";
     te = "";
   }
-
+  else if (te.substring(0, 3) == "UVN")
+  {
+    // Serial.println("in" + de.substring(0,3));
+    uv_on();
+    delay(200);
+    de = "done";
+    te = "";
+  }
 }
+
+void(* resetFunc) (void) = 0;
 
 void tsen_stat()
 {
@@ -233,6 +251,7 @@ void tsen_stat()
       break;
     }
   }
+  
 }
 
 void dsen_stat()
@@ -546,6 +565,32 @@ void idle()
   }
 }
 
+void uv_on()
+{
+  digitalWrite(uvlamp, HIGH);
+  uint32_t period = dur * 1000L;       // 5 minutes
+  for ( uint32_t tStart = millis();  (millis() - tStart) < period;  )
+  {
+    if(uv_off_stat==1)
+    {
+      break;
+    }
+
+  }
+  uv_off_stat=0;
+  digitalWrite(uvlamp, LOW);
+  
+  //Buzzer for alarm after completion
+  period = 2 * 1000L; 
+  for ( uint32_t tStart = millis();  (millis() - tStart) < period;  )
+  {
+    tone(buzzer, 2000); // Send 1KHz sound signal...
+    delay(1000);        // ...for 1 sec
+    noTone(buzzer);     // Stop sound...
+    delay(1000);        // ...for 1sec
+  }
+}
+
 void buzzer_demo()
 {
   uint32_t period = dur * 1000L;       // 5 minutes
@@ -600,7 +645,7 @@ void receiveEvent(int numBytes)
       i++;
     }
   }
-  else if (te.substring(0, 3) == "idl" || te.substring(0, 3) == "buz")
+  else if (te.substring(0, 3) == "idl" || te.substring(0, 3) == "mag"|| te.substring(0, 3) == "buz" || te.substring(0, 3) == "UVN")
   {
     char buf[30];
     te.toCharArray(buf, 30);
@@ -636,5 +681,16 @@ void receiveEvent(int numBytes)
       i++;
     }
   }
+   else if (te.substring(0, 3) == "stp")
+   {
+    initz();
+    delay(100);
+    de = "done";
+    resetFunc();
+   }
+   else if (te.substring(0, 3) == "UVF")
+   {
+    uv_off_stat=1;
+   }
 
 }
