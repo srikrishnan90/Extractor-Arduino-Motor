@@ -79,7 +79,7 @@ void loop()
     //Serial.println("in" + de.substring(0,3));
     b_home();
     base_init();
-    delay(500);
+    delay(200);
     de = "done";
     te = "";
   }
@@ -87,7 +87,7 @@ void loop()
   {
     //Serial.println("in" + de.substring(0,3));
     s_home();
-    delay(500);
+    delay(200);
     de = "done";
     te = "";
   }
@@ -95,7 +95,7 @@ void loop()
   {
     //Serial.println("in" + de.substring(0,3));
     m_home();
-    delay(500);
+    delay(200);
     de = "done";
     te = "";
   }
@@ -106,7 +106,7 @@ void loop()
     {
       base_forward();
     }
-    delay(500);
+    delay(200);
     de = "done";
     te = "";
   }
@@ -117,7 +117,7 @@ void loop()
     {
       base_backward();
     }
-    delay(500);
+    delay(200);
     de = "done";
     te = "";
   }
@@ -128,7 +128,7 @@ void loop()
     {
       sleeve_forward();
     }
-    delay(500);
+    delay(200);
     de = "done";
     te = "";
   }
@@ -142,7 +142,7 @@ void loop()
     sleeve_backward();
     magnet_forward();
     m_s_forward();
-    delay(500);
+    delay(200);
     de = "done";
     te = "";
   }
@@ -153,7 +153,7 @@ void loop()
     {
       m_s_forward();
     }
-    delay(500);
+    delay(200);
     de = "done";
     te = "";
   }
@@ -164,7 +164,7 @@ void loop()
     {
       m_s_backward();
     }
-    delay(500);
+    delay(200);
     de = "done";
     te = "";
   }
@@ -172,7 +172,7 @@ void loop()
   {
     //Serial.println("in" + de.substring(0,3));
     idle();
-    delay(500);
+    delay(200);
     de = "done";
     te = "";
   }
@@ -180,7 +180,7 @@ void loop()
   {
     //Serial.println("in" + de.substring(0,3));
     idle();
-    delay(500);
+    delay(200);
     de = "done";
     te = "";
   }
@@ -188,7 +188,7 @@ void loop()
   {
     // Serial.println("in" + de.substring(0,3));
     mix();
-    delay(500);
+    delay(200);
     de = "done";
     te = "";
   }
@@ -196,7 +196,7 @@ void loop()
   {
     // Serial.println("in" + de.substring(0,3));
     mis();
-    delay(500);
+    delay(200);
     de = "done";
     te = "";
   }
@@ -204,7 +204,7 @@ void loop()
   {
     // Serial.println("in" + de.substring(0,3));
     buzzer_demo();
-    delay(500);
+    delay(200);
     de = "done";
     te = "";
   }
@@ -212,7 +212,7 @@ void loop()
   {
     // Serial.println("in" + de.substring(0,3));
     initz();
-    delay(500);
+    delay(200);
     de = "done";
     te = "";
   }
@@ -338,9 +338,9 @@ void magnet_home()
     else
     {
       digitalWrite(m_stp, HIGH);
-      delayMicroseconds(1000);
+      delayMicroseconds(600);
       digitalWrite(m_stp, LOW);
-      delayMicroseconds(1000);
+      delayMicroseconds(600);
     }
   }
   //digitalWrite(m_en, HIGH);
@@ -382,7 +382,7 @@ void sleeve_forward()
 {
   digitalWrite(s_en, LOW);
   digitalWrite(s_dir, LOW);
-  for (int i = 0; i < 795; i++)//770
+  for (int i = 0; i < 815; i++)//770//795
   {
 
     digitalWrite(s_stp, HIGH);
@@ -397,7 +397,7 @@ void sleeve_backward()
 {
   digitalWrite(s_en, LOW);
   digitalWrite(s_dir, HIGH);
-  for (int i = 0; i < 645; i++)//620
+  for (int i = 0; i < 665; i++)//620//645
   {
 
     digitalWrite(s_stp, HIGH);
@@ -412,7 +412,7 @@ void magnet_forward()
 {
   digitalWrite(m_en, LOW);
   digitalWrite(m_dir, HIGH);
-  for (int i = 0; i < 838; i++)
+  for (int i = 0; i < 860; i++)//838
   {
     digitalWrite(m_stp, HIGH);
     delayMicroseconds(1500);
@@ -441,7 +441,7 @@ void m_s_backward()
   digitalWrite(s_en, LOW);
   digitalWrite(m_dir, LOW);
   digitalWrite(s_dir, HIGH);
-  for (int i = 0; i < 645; i++)//620
+  for (int i = 0; i < 665; i++)//620//645
   {
     digitalWrite(m_stp, HIGH);
     digitalWrite(s_stp, HIGH);
@@ -458,7 +458,7 @@ void m_s_forward()
   digitalWrite(s_en, LOW);
   digitalWrite(m_dir, HIGH);
   digitalWrite(s_dir, LOW);
-  for (int i = 0; i < 645; i++)//620
+  for (int i = 0; i < 665; i++)//620//645
   {
     digitalWrite(m_stp, HIGH);
     digitalWrite(s_stp, HIGH);
